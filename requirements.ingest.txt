@@ -1,0 +1,16 @@
+# argus-sec — data pipeline dependencies
+# For scripts/nvd_sync.py, deduplicate.py, chunk_cves.py, ingest.py
+#
+# Install: pip install -r requirements.ingest.txt
+
+# HTTP + progress
+requests==2.34.2
+tqdm==4.68.3
+python-dotenv==1.2.2
+
+# Vector store + embeddings (ingest into Qdrant)
+qdrant-client==1.18.0
+fastembed==0.8.0
+
+# PostgreSQL
+psycopg2-binary==2.9.12

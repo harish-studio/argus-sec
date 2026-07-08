@@ -1,0 +1,345 @@
+[
+  {
+    "id": 1,
+    "question": "What does CVE-2026-42208 affect and what is its exploitation status?",
+    "type": "exact_cve_lookup",
+    "expected_cve_ids": [
+      "CVE-2026-42208"
+    ],
+    "filter_hint": {
+      "severity": "CRITICAL",
+      "package": "LiteLLM",
+      "cisa_kev": true
+    }
+  },
+  {
+    "id": 2,
+    "question": "What vulnerability is described for CVE-2026-0545 in MLflow?",
+    "type": "exact_cve_lookup",
+    "expected_cve_ids": [
+      "CVE-2026-0545"
+    ],
+    "filter_hint": {
+      "severity": "CRITICAL",
+      "package": "MLflow",
+      "fix_available": false
+    }
+  },
+  {
+    "id": 3,
+    "question": "What is the issue in CVE-2026-27953 and which packages does it involve?",
+    "type": "exact_cve_lookup",
+    "expected_cve_ids": [
+      "CVE-2026-27953"
+    ],
+    "filter_hint": {
+      "severity": "CRITICAL",
+      "package": "FastAPI"
+    }
+  },
+  {
+    "id": 4,
+    "question": "What vulnerability is described in CVE-2026-35030 and which packages does it affect?",
+    "type": "exact_cve_lookup",
+    "expected_cve_ids": [
+      "CVE-2026-35030"
+    ],
+    "filter_hint": {
+      "severity": "CRITICAL",
+      "package": "LiteLLM"
+    }
+  },
+  {
+    "id": 5,
+    "question": "What vulnerability is described in CVE-2026-2275 and what is its exploitation status?",
+    "type": "exact_cve_lookup",
+    "expected_cve_ids": [
+      "CVE-2026-2275"
+    ],
+    "filter_hint": {
+      "package": "CrewAI"
+    }
+  },
+  {
+    "id": 6,
+    "question": "Which CVEs in the corpus affect both the Anthropic SDK and the OpenAI SDK?",
+    "type": "cross_package",
+    "expected_cve_ids": [
+      "CVE-2026-31942",
+      "CVE-2026-54236"
+    ],
+    "filter_hint": {
+      "package": "Anthropic SDK"
+    }
+  },
+  {
+    "id": 7,
+    "question": "Which CVEs affect both LangChain and LangGraph?",
+    "type": "cross_package",
+    "expected_cve_ids": [
+      "CVE-2025-8709",
+      "CVE-2026-14742"
+    ],
+    "filter_hint": {
+      "package": "LangChain"
+    }
+  },
+  {
+    "id": 8,
+    "question": "Which CRITICAL CVEs affect both LiteLLM and the OpenAI SDK?",
+    "type": "cross_package",
+    "expected_cve_ids": [
+      "CVE-2026-42208",
+      "CVE-2026-42271",
+      "CVE-2026-49468"
+    ],
+    "filter_hint": {
+      "package": "LiteLLM",
+      "severity": "CRITICAL"
+    }
+  },
+  {
+    "id": 9,
+    "question": "Which CVEs affect both LangChain and MLflow?",
+    "type": "cross_package",
+    "expected_cve_ids": [
+      "CVE-2024-37058"
+    ],
+    "filter_hint": {
+      "package": "LangChain"
+    }
+  },
+  {
+    "id": 10,
+    "question": "Which CVEs affect both GitHub Actions and have a CISA KEV listing?",
+    "type": "exploitation_signal",
+    "expected_cve_ids": [
+      "CVE-2025-30154",
+      "CVE-2026-33634",
+      "CVE-2026-45321"
+    ],
+    "filter_hint": {
+      "package": "GitHub Actions",
+      "cisa_kev": true
+    }
+  },
+  {
+    "id": 11,
+    "question": "Which CRITICAL CVEs in the corpus have no fix available?",
+    "type": "severity_filtered",
+    "expected_cve_ids": [
+      "CVE-2025-15031",
+      "CVE-2026-45321",
+      "CVE-2025-30154"
+    ],
+    "filter_hint": {
+      "severity": "CRITICAL",
+      "fix_available": false
+    }
+  },
+  {
+    "id": 12,
+    "question": "Which CRITICAL network-exploitable Grafana CVEs have active exploitation confirmed in the wild?",
+    "type": "severity_filtered",
+    "expected_cve_ids": [
+      "CVE-2021-43798",
+      "CVE-2021-39226"
+    ],
+    "filter_hint": {
+      "severity": "CRITICAL",
+      "attack_vector": "NETWORK",
+      "ssvc_exploitation": "Active exploitation confirmed in the wild (SSVC)",
+      "package": "Grafana"
+    }
+  },
+  {
+    "id": 13,
+    "question": "Which CRITICAL CVEs in the corpus have fix available: true?",
+    "type": "severity_filtered",
+    "expected_cve_ids": [
+      "CVE-2026-42208",
+      "CVE-2026-35030",
+      "CVE-2026-49468",
+      "CVE-2026-33634",
+      "CVE-2026-42271"
+    ],
+    "filter_hint": {
+      "severity": "CRITICAL",
+      "fix_available": true
+    }
+  },
+  {
+    "id": 14,
+    "question": "Which HIGH vulnerabilities affect the package LiteLLM?",
+    "type": "package_scoped",
+    "expected_cve_ids": [
+      "CVE-2026-35029",
+      "CVE-2026-42203",
+      "CVE-2026-42271"
+    ],
+    "filter_hint": {
+      "package": "LiteLLM",
+      "severity": "HIGH"
+    }
+  },
+  {
+    "id": 15,
+    "question": "Which HIGH or CRITICAL OpenAI SDK vulnerabilities in the corpus are network-exploitable?",
+    "type": "package_scoped",
+    "expected_cve_ids": [
+      "CVE-2026-31942",
+      "CVE-2026-35030",
+      "CVE-2026-42208",
+      "CVE-2026-42271",
+      "CVE-2026-49468"
+    ],
+    "filter_hint": {
+      "package": "OpenAI SDK",
+      "attack_vector": "NETWORK"
+    }
+  },
+  {
+    "id": 16,
+    "question": "Which Prometheus vulnerabilities in the corpus are network-exploitable?",
+    "type": "package_scoped",
+    "expected_cve_ids": [
+      "CVE-2024-51988",
+      "CVE-2025-3454",
+      "CVE-2022-4289",
+      "CVE-2026-42151",
+      "CVE-2018-14602",
+      "CVE-2021-32718",
+      "CVE-2021-41090"
+    ],
+    "filter_hint": {
+      "package": "Prometheus",
+      "attack_vector": "NETWORK"
+    }
+  },
+  {
+    "id": 17,
+    "question": "Which Grafana vulnerabilities in the corpus do not have a fix available?",
+    "type": "package_scoped",
+    "expected_cve_ids": [
+      "CVE-2024-51988",
+      "CVE-2025-3454"
+    ],
+    "filter_hint": {
+      "package": "Grafana",
+      "fix_available": false
+    }
+  },
+  {
+    "id": 18,
+    "question": "Which Docker-related vulnerabilities are in the corpus?",
+    "type": "package_scoped",
+    "expected_cve_ids": [
+      "CVE-2019-13139",
+      "CVE-2019-15752"
+    ],
+    "filter_hint": {
+      "package": "Docker"
+    }
+  },
+  {
+    "id": 19,
+    "question": "Which CVEs in the corpus mention SQL injection?",
+    "type": "weakness_type",
+    "expected_cve_ids": [
+      "CVE-2025-8709",
+      "CVE-2026-6638",
+      "CVE-2006-2314"
+    ],
+    "filter_hint": {
+      "weakness": "SQL injection"
+    }
+  },
+  {
+    "id": 20,
+    "question": "Which CVEs in the corpus involve directory traversal?",
+    "type": "weakness_type",
+    "expected_cve_ids": [
+      "CVE-2021-43798",
+      "CVE-2026-2033"
+    ],
+    "filter_hint": {
+      "weakness": "Directory traversal"
+    }
+  },
+  {
+    "id": 21,
+    "question": "Which CVEs in the corpus involve deserialization of untrusted data?",
+    "type": "weakness_type",
+    "expected_cve_ids": [
+      "CVE-2024-37058",
+      "CVE-2026-27953"
+    ],
+    "filter_hint": {
+      "weakness": "Deserialization"
+    }
+  },
+  {
+    "id": 22,
+    "question": "Which CVEs in the corpus involve arbitrary file write via tar archive handling?",
+    "type": "weakness_type",
+    "expected_cve_ids": [
+      "CVE-2025-15031"
+    ],
+    "filter_hint": {
+      "package": "MLflow",
+      "weakness": "Arbitrary file write"
+    }
+  },
+  {
+    "id": 23,
+    "question": "Which CVEs have proof-of-concept exploit code available?",
+    "type": "exploitation_signal",
+    "expected_cve_ids": [
+      "CVE-2026-54236",
+      "CVE-2026-27953",
+      "CVE-2026-0545",
+      "CVE-2024-37058",
+      "CVE-2025-8709",
+      "CVE-2025-65098",
+      "CVE-2026-34756",
+      "CVE-2026-5803",
+      "CVE-2026-22778"
+    ],
+    "filter_hint": {
+      "ssvc_exploitation": "Proof-of-concept code exists (SSVC)"
+    }
+  },
+  {
+    "id": 24,
+    "question": "Which CVEs have active exploitation confirmed in the wild (SSVC)?",
+    "type": "exploitation_signal",
+    "expected_cve_ids": [
+      "CVE-2026-42208",
+      "CVE-2026-42271",
+      "CVE-2021-39226",
+      "CVE-2021-43798",
+      "CVE-2021-41090",
+      "CVE-2021-32718",
+      "CVE-2019-15752",
+      "CVE-2022-0543",
+      "CVE-2025-30154",
+      "CVE-2026-33634",
+      "CVE-2026-45321"
+    ],
+    "filter_hint": {
+      "ssvc_exploitation": "Active exploitation confirmed in the wild (SSVC)"
+    }
+  },
+  {
+    "id": 25,
+    "question": "Which exact CVE in this corpus is described as a SQL injection vulnerability in LangGraph's SQLite store implementation?",
+    "type": "exact_cve_lookup",
+    "expected_cve_ids": [
+      "CVE-2025-8709"
+    ],
+    "filter_hint": {
+      "package": "LangGraph",
+      "attack_vector": "LOCAL"
+    }
+  }
+]

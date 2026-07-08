@@ -1,0 +1,93 @@
+# argus-sec — Docker Compose
+#
+# PostgreSQL: shared with nexus-ai-gateway (dev_postgres container)
+#   - argus_sec database created manually in dev_postgres
+#   - connects via nexus-ai-gateway_default network
+#
+# Qdrant: own container (nexus-ai-gateway does not use Qdrant)
+#
+# Usage:
+#   # First run:
+#   docker compose up -d qdrant
+#   docker compose run --rm ingest
+#
+#   # Incremental sync + re-ingest:
+#   python -m scripts.nvd_sync --incremental
+#   docker compose run --rm ingest
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # Qdrant v1.17.1 — vector store for CVE narrative embeddings
+  # ---------------------------------------------------------------------------
+  qdrant:
+    image: qdrant/qdrant:v1.17.1
+    container_name: argus_qdrant
+    restart: unless-stopped
+    environment:
+      QDRANT__SERVICE__API_KEY: ${QDRANT_API_KEY}
+    ports:
+      - "${QDRANT_PORT}:6333"
+      - "${QDRANT_GRPC_PORT}:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD", "bash", "-c", "</dev/tcp/localhost/6333"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+    networks:
+      - argus_default
+
+  # ---------------------------------------------------------------------------
+  # Ingestion — one-shot container
+  # Connects to nexus-ai-gateway_default to reach dev_postgres,
+  # and to argus_default to reach argus_qdrant.
+  # ---------------------------------------------------------------------------
+  ingest:
+    build:
+      context: .
+      dockerfile: Dockerfile.ingest
+    container_name: argus_ingest
+    restart: "no"
+    environment:
+      POSTGRES_USER:       ${POSTGRES_USER}
+      POSTGRES_PASSWORD:   ${POSTGRES_PASSWORD}
+      POSTGRES_DB:         ${POSTGRES_DB}
+      POSTGRES_URL:        postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@dev_postgres:5432/${POSTGRES_DB}
+      QDRANT_URL:          http://argus_qdrant:6333
+      QDRANT_API_KEY:      ${QDRANT_API_KEY}
+      QDRANT_COLLECTION:   ${QDRANT_COLLECTION}
+      CHUNKS_PATH:         ${CHUNKS_PATH}
+      FASTEMBED_MODEL:     ${FASTEMBED_MODEL}
+      EMBEDDING_DIM:       ${EMBEDDING_DIM}
+      FASTEMBED_CACHE_DIR: ${FASTEMBED_CACHE_DIR}
+      QDRANT_BATCH_SIZE:   ${QDRANT_BATCH_SIZE}
+      PG_BATCH_SIZE:       ${PG_BATCH_SIZE}
+    volumes:
+      - ./data:/app/data
+      - fastembed_cache:/app/.fastembed_cache
+    depends_on:
+      qdrant:
+        condition: service_healthy
+    networks:
+      - argus_default
+      - nexus_default
+
+# ---------------------------------------------------------------------------
+# Networks
+# ---------------------------------------------------------------------------
+networks:
+  argus_default:
+    driver: bridge
+  nexus_default:
+    external: true
+    name: nexus-ai-gateway_default
+
+# ---------------------------------------------------------------------------
+# Volumes
+# ---------------------------------------------------------------------------
+volumes:
+  qdrant_data:
+  fastembed_cache:

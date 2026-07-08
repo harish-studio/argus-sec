@@ -1,0 +1,15 @@
+# argus-sec — evaluation dependencies
+# For scripts/evaluate.py, generate_golden_questions.py
+#
+# Install: pip install -r requirements.eval.txt
+# Note: also requires requirements.txt (runtime deps) to be installed
+
+# RAGAS evaluation framework
+ragas==0.4.3
+
+# LangChain (required by RAGAS 0.4.3 internals)
+langchain-community==0.4.2
+langchain-openai==1.3.3
+
+# OpenAI (judge LLM + embeddings)
+openai==2.44.0

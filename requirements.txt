@@ -1,0 +1,25 @@
+# argus-sec — runtime dependencies
+# For app/ (FastAPI RAG API) and services/ (retrieval module)
+#
+# Install: pip install -r requirements.txt
+
+# API
+fastapi==0.139.0
+uvicorn==0.50.2
+python-dotenv==1.2.2
+httpx==0.28.1
+pydantic==2.13.4
+
+# LLM synthesis
+openai==2.44.0
+
+# Vector store + hybrid retrieval (dense + sparse BM25)
+qdrant-client==1.18.0
+fastembed==0.8.0
+
+# Cross-encoder reranking
+sentence-transformers==5.6.0
+torch==2.12.1
+
+# Progress
+tqdm==4.68.3

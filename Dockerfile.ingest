@@ -1,0 +1,64 @@
+# argus-sec — ingestion container
+# Multi-stage build using virtualenv (canonical Docker Python pattern).
+# Ref: https://docs.docker.com/language/python/containerize/
+#
+# Stage 1 (builder): installs deps into /venv + pre-downloads FastEmbed models
+# Stage 2 (runtime): copies /venv and model cache, runs ingest.py
+
+# ---------------------------------------------------------------------------
+# Stage 1 — builder
+# ---------------------------------------------------------------------------
+FROM python:3.11.9-slim AS builder
+
+WORKDIR /build
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create virtualenv — explicit path, no PYTHONPATH hacks needed
+RUN python -m venv /venv
+
+COPY requirements.ingest.txt .
+
+# Install into the venv
+RUN /venv/bin/pip install --no-cache-dir -r requirements.ingest.txt
+
+# Pre-download FastEmbed models using the venv's Python
+# cache_dir= constructor arg required — FASTEMBED_CACHE_PATH env var
+# is ignored in fastembed 0.4.x.
+# Ref: https://github.com/qdrant/fastembed/issues/217
+RUN /venv/bin/python - <<'PYEOF'
+from fastembed import TextEmbedding, SparseTextEmbedding
+TextEmbedding(
+    model_name="BAAI/bge-small-en-v1.5",
+    cache_dir="/model_cache",
+)
+SparseTextEmbedding(
+    model_name="Qdrant/bm25",
+    cache_dir="/model_cache",
+)
+print("FastEmbed models pre-downloaded successfully.")
+PYEOF
+
+# ---------------------------------------------------------------------------
+# Stage 2 — runtime
+# ---------------------------------------------------------------------------
+FROM python:3.11.9-slim AS runtime
+
+RUN useradd --create-home --shell /bin/bash argus
+USER argus
+WORKDIR /app
+
+# Copy venv and model cache from builder
+COPY --from=builder /venv /venv
+COPY --from=builder /model_cache /app/.fastembed_cache
+
+# Copy ingestion script
+COPY scripts/ingest.py ./scripts/ingest.py
+
+# Put venv on PATH — no ENV PYTHONPATH needed
+ENV PATH="/venv/bin:$PATH"
+ENV FASTEMBED_CACHE_DIR=/app/.fastembed_cache
+
+CMD ["python", "-m", "scripts.ingest"]
