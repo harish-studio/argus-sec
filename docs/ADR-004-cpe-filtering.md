@@ -1,8 +1,6 @@
 # ADR-004: CPE Post-Filtering for High-Volume Packages
 
-**Status:** Accepted  
 **Date:** 2026-07-07  
-**Deciders:** Harry (solo portfolio project)
 
 ---
 

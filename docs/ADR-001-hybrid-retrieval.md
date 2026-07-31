@@ -1,8 +1,6 @@
 # ADR-001: Hybrid Retrieval (BM25 + Dense) over Dense-Only
 
-**Status:** Accepted  
 **Date:** 2026-07-07  
-**Deciders:** Harry (solo portfolio project)
 
 ---
 

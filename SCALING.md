@@ -190,6 +190,6 @@ Total: ~7 minutes daily. Zero downtime — Qdrant upsert is non-blocking.
 ## What Is Not Addressed Here
 
 - **Multi-region deployment** — single eu-west-1 region assumed. Multi-region requires Qdrant replication (Qdrant Cloud) and RDS read replicas.
-- **Authentication** — current API has no auth layer. Production adds API key validation consistent with nexus-ai-gateway.
+- **Authentication** — current API has no auth layer. Production adds API key validation.
 - **GDPR / NIS2 compliance** — if deployed in EU enterprise, CVE data processing under GDPR Article 5 (purpose limitation) and NIS2 vulnerability disclosure obligations apply.
 - **Fine-tuned embedding** — BAAI/bge-small-en-v1.5 is general-purpose. A security-domain fine-tuned model would improve Context Precision beyond 0.82.

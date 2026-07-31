@@ -1,8 +1,6 @@
 # ADR-002: CVE Corpus Scope and NVD API Design
 
-**Status:** Accepted  
 **Date:** 2026-07-07  
-**Deciders:** Harry (solo portfolio project)
 
 ---
 

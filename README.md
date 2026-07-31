@@ -4,8 +4,6 @@
 
 Answers natural language questions about vulnerabilities affecting a production GenAI stack — 912 real CVEs across 31 packages, retrieved with BM25 + dense hybrid search, reranked with a cross-encoder, and synthesised with strict grounding via gpt-5.4-nano.
 
-Part of a 5-project GenAI Solution Architect portfolio demonstrating AI technical depth, enterprise delivery discipline, and EU governance fluency.
-
 ---
 
 ## What it does
@@ -292,21 +290,6 @@ curl -X POST http://localhost:8001/query \
 - [ADR-002: CVE Corpus Scope and NVD API Design](docs/ADR-002-corpus-scope.md)
 - [ADR-003: Strict Grounding over Augmented Synthesis](docs/ADR-003-strict-grounding.md)
 - [ADR-004: CPE Post-Filtering for High-Volume Packages](docs/ADR-004-cpe-filtering.md)
-
----
-
-## Portfolio Context
-
-This is **Portfolio Project 1** of a five-project GenAI Solution Architect portfolio,
-built to demonstrate production-style system design across:
-
-| Project | What it demonstrates |
-|---|---|
-| **nexus-ai-gateway** (P5) | Governed enterprise AI gateway — EU AI Act risk classification, PII redaction, multi-provider routing, semantic cache |
-| **argus-sec** (P1) | RAG depth — hybrid retrieval, cross-encoder rerank, RAGAS evaluation, security domain expertise |
-| **atlas-supply** (P3) | Multi-agent with MCP — LangGraph supervisor, OpenAI Agents SDK, FastMCP server |
-| **kronos-agent** (P2) | Knowledge work automation — LangGraph + CrewAI, two-layer memory, HITL interrupts |
-| **forge-mlops** (P4) | LLMOps — QLoRA fine-tuning, MLflow tracking, DVC versioning, CI eval gate |
 
 ---
 
