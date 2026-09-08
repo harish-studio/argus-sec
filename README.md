@@ -169,7 +169,7 @@ curl -X POST http://localhost:8001/query \
 
 ### `POST /search` — Retrieval only (no synthesis)
 
-Same request schema as `/query`. Returns ranked chunks with scores — no LLM call, no cost. Used by downstream agents (e.g. `kronos-agent`) that synthesise their own answers.
+Same request schema as `/query`. Returns ranked chunks with scores — no LLM call, no cost. Used by downstream agents that synthesise their own answers.
 
 ### `GET /health`
 
