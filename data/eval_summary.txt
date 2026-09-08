@@ -1,27 +1,49 @@
 argus-sec RAG Evaluation Summary
-==================================================
-Questions evaluated : 23/25
-Skipped (low conf)  : 2
-Failed (API error)  : 0
-Fallback to local   : 0
-Total time          : 681s
+==============================================================
+Runs                : 3
+Questions per run   : 23/25 scored
+Skipped (low conf)  : 2 (run 1)
+Metric errors       : 3/207
+Total time          : 1176s
 
-Aggregate Scores
-------------------------------
-Faithfulness        : 0.9265  ✅ PASS (threshold 0.85)
-Answer Relevancy    : 0.7971  ✅ PASS (threshold 0.75)
-Context Precision   : 0.8245  ✅ PASS (threshold 0.75)
+Aggregate Scores (mean +/- SD across runs)
+--------------------------------------------------------------
+Faithfulness        : 0.9172 +/- 0.014  PASS (threshold 0.85)
+                      per run: ['0.902', '0.920', '0.930']
+Answer Relevancy    : 0.7828 +/- 0.036  INCONCLUSIVE (threshold within 1 SD) (threshold 0.75)
+                      per run: ['0.824', '0.758', '0.765']
+Context Precision   : 0.7835 +/- 0.019  PASS (threshold 0.75)
+                      per run: ['0.802', '0.764', '0.785']
 
-Scores by Question Type
-------------------------------
-  cross_package             F=0.738  R=0.941  P=0.833
-  exact_cve_lookup          F=0.933  R=0.790  P=0.889
-  exploitation_signal       F=0.944  R=0.900  P=0.333
-  package_scoped            F=1.000  R=0.785  P=0.967
-  severity_filtered         F=1.000  R=0.280  P=1.000
-  weakness_type             F=1.000  R=0.857  P=0.857
+WARNING: 3 metric call(s) failed and were excluded.
+Means are computed from successful calls only — treat as partial.
 
-Judge LLM   : gpt-5.4-nano
+Scores by Question Type (pooled across runs)
+--------------------------------------------------------------
+  type                        n       F       R       P
+  cross_package               4   0.873   0.907   0.667
+  exact_cve_lookup            6   0.921   0.731   0.861
+  exploitation_signal         3   0.947   0.913   0.494
+  package_scoped              4   0.889   0.674   0.989
+  severity_filtered           2   0.826   0.540   0.853
+  weakness_type               4   1.000   0.869   0.761
+  n = distinct questions of that type; each scored once per run.
+
+Lowest-faithfulness samples (below 0.7)
+--------------------------------------------------------------
+  [package_scoped] Q17 run 1 F=0.500
+    Which Grafana vulnerabilities in the corpus do not have a fix availabl
+  [exact_cve_lookup] Q25 run 1 F=0.600
+    Which exact CVE in this corpus is described as a SQL injection vulnera
+  [exact_cve_lookup] Q25 run 3 F=0.600
+    Which exact CVE in this corpus is described as a SQL injection vulnera
+  [severity_filtered] Q12 run 3 F=0.625
+    Which CRITICAL network-exploitable Grafana CVEs have active exploitati
+  [exploitation_signal] Q23 run 1 F=0.667
+    Which CVEs have proof-of-concept exploit code available?
+  Full answers and contexts are in data/eval_results.json.
+
+Judge LLM   : gpt-4o-mini
 Corpus      : 912 CVEs across 31 packages (NVD, last 24 months)
 Retrieval   : Hybrid BM25 + dense (BAAI/bge-small-en-v1.5), RRF fusion, cross-encoder rerank
 Synthesis   : gpt-5.4-nano (strict grounding — no external knowledge)
